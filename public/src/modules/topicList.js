@@ -197,6 +197,8 @@ define('topicList', [
 	}
 
 	function onTopicsLoaded(templateName, topics, showSelect, direction, callback) {
+		console.log('lee test called!');
+		
 		if (noTopics(topics, callback)) return;
 		topics = filterTopicsOnDom(topics);
 
