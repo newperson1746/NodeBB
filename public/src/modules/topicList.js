@@ -196,6 +196,13 @@ define('topicList', [
 		return false;
 	}
 
+	function getInsertionPoints(direction, topicEls) {
+		return {
+			after: direction > 0 ? topicEls.last() : null,
+			before: direction < 0 ? topicEls.first() : null
+		};
+	}
+
 	function onTopicsLoaded(templateName, topics, showSelect, direction, callback) {
 		console.log('lee test called!');
 		
@@ -204,15 +211,7 @@ define('topicList', [
 
 		if (noTopics(topics, callback)) return;
 
-		let after;
-		let before;
-		const topicEls = topicListEl.find('[component="category/topic"]');
-
-		if (direction > 0 && topics.length) {
-			after = topicEls.last();
-		} else if (direction < 0 && topics.length) {
-			before = topicEls.first();
-		}
+		const { after, before } = getInsertionPoints(direction, topicListEl.find('[component="category/topic"]'));
 
 		const tplData = {
 			topics: topics,
