@@ -187,17 +187,20 @@ define('topicList', [
 		});
 	}
 
-	function onTopicsLoaded(templateName, topics, showSelect, direction, callback) {
+	function noTopics(topics, callback) {
 		if (!topics || !topics.length) {
 			$('#load-more-btn').hide();
-			return callback();
+			callback();
+			return true;
 		}
+		return false;
+	}
+
+	function onTopicsLoaded(templateName, topics, showSelect, direction, callback) {
+		if (noTopics(topics, callback)) return;
 		topics = filterTopicsOnDom(topics);
 
-		if (!topics.length) {
-			$('#load-more-btn').hide();
-			return callback();
-		}
+		if (noTopics(topics, callback)) return;
 
 		let after;
 		let before;
