@@ -199,7 +199,7 @@ define('topicList', [
 	function getInsertionPoints(direction, topicEls) {
 		return {
 			after: direction > 0 ? topicEls.last() : null,
-			before: direction < 0 ? topicEls.first() : null
+			before: direction < 0 ? topicEls.first() : null,
 		};
 	}
 
