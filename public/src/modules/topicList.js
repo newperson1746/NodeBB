@@ -203,6 +203,21 @@ define('topicList', [
 		};
 	}
 
+	function insertHtml(html, after, before, topicListEl) {
+		if (after?.length) {
+			html.insertAfter(after);
+		} else if (before?.length) {
+			const height = $(document).height();
+			const scrollTop = $(window).scrollTop();
+
+			html.insertBefore(before);
+
+			$(window).scrollTop(scrollTop + ($(document).height() - height));
+		} else {
+			topicListEl.append(html);
+		}
+	}
+
 	function onTopicsLoaded(templateName, topics, showSelect, direction, callback) {
 		console.log('lee test called!');
 		
@@ -228,18 +243,7 @@ define('topicList', [
 			topicListEl.removeClass('hidden');
 			$('#category-no-topics').remove();
 
-			if (after && after.length) {
-				html.insertAfter(after);
-			} else if (before && before.length) {
-				const height = $(document).height();
-				const scrollTop = $(window).scrollTop();
-
-				html.insertBefore(before);
-
-				$(window).scrollTop(scrollTop + ($(document).height() - height));
-			} else {
-				topicListEl.append(html);
-			}
+			insertHtml(html, after, before, topicListEl);
 
 			if (!topicSelect.getSelectedTids().length) {
 				infinitescroll.removeExtra(topicListEl.find('[component="category/topic"]'), direction, Math.max(60, config.topicsPerPage * 3));
